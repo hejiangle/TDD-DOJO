@@ -17,21 +17,21 @@ namespace FizzBuzz
             var index = 1;
             while (index <= 100)
             {
-                if (!IsMultipleOfThree(index) && !IsMultipleOfFive(index))
+                if (!(IsMultipleOfThree(index) || IsHasThree(index)) && !IsMultipleOfFive(index))
                 {
                     FizzBuzz.Add(index.ToString());
                     index++;
                     continue;
                 }
 
-                if (IsMultipleOfThree(index) && IsMultipleOfFive(index))
+                if ((IsMultipleOfThree(index) || IsHasThree(index)) && IsMultipleOfFive(index))
                 {
                     FizzBuzz.Add("FizzBuzz");
                     index++;
                     continue;
                 }
 
-                if (IsMultipleOfThree(index))
+                if (IsMultipleOfThree(index) || IsHasThree(index))
                 {
                     FizzBuzz.Add("Fizz");
                 }
@@ -55,6 +55,11 @@ namespace FizzBuzz
         private static bool IsMultipleOfFive(int index)
         {
             return index % 5 == 0;
+        }
+
+        private static bool IsHasThree(int index)
+        {
+            return index.ToString().Contains("3");
         }
     }
 }
