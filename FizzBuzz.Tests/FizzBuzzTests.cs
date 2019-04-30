@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace FizzBuzz.Tests
@@ -6,8 +5,13 @@ namespace FizzBuzz.Tests
     public class FizzBuzzTests
     {
         [Fact]
-        public void Test1()
+        public void ShouldReturn100ItemsList()
         {
+            var result = Program.GenerateFizzBuzz();
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal(100, result.Count);
         }
     }
 }
