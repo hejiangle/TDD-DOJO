@@ -38,7 +38,7 @@ namespace FizzBuzz.Tests
         {
             var result = Program.GenerateFizzBuzz();
 
-            Assert.Contains("Buzz", result);
+            Assert.Contains("FizzBuzz", result);
             Assert.True(
                 result.Where(item => (result.IndexOf(item) + 1) % 5 == 0)
                       .Where(item => (result.IndexOf(item) + 1) % 3 == 0)
@@ -52,6 +52,15 @@ namespace FizzBuzz.Tests
 
             Assert.Contains("Fizz", result);
             Assert.True(result.Where(item => item.Contains("3")).All(item => item.Contains("Fizz")));
+        }
+
+        [Fact]
+        public void ShouldUseFizzReplaceTheIndexIncludingFive()
+        {
+            var result = Program.GenerateFizzBuzz();
+
+            Assert.Contains("Fizz", result);
+            Assert.True(result.Where(item => item.Contains("5")).All(item => item.Contains("Buzz")));
         }
     }
 }
