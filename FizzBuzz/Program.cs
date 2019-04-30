@@ -12,7 +12,16 @@ namespace FizzBuzz
 
         public static List<string> GenerateFizzBuzz()
         {
-            throw new NotImplementedException();
+            var FizzBuzz = new List<string>();
+
+            var index = 1;
+            while (index <= 100)
+            {
+                FizzBuzz.Add(index.ToString());
+                index++;
+            }
+
+            return FizzBuzz;
         }
     }
 }
