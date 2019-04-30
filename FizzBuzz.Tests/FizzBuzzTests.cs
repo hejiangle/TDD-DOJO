@@ -44,5 +44,14 @@ namespace FizzBuzz.Tests
                       .Where(item => (result.IndexOf(item) + 1) % 3 == 0)
                       .All(item => item.Contains("FizzBuzz")));
         }
+
+        [Fact]
+        public void ShouldUseFizzReplaceTheIndexIncludingThree()
+        {
+            var result = Program.GenerateFizzBuzz();
+
+            Assert.Contains("Fizz", result);
+            Assert.True(result.Where(item => item.Contains("3")).All(item => item.Contains("Fizz")));
+        }
     }
 }
