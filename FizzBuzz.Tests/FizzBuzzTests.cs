@@ -59,7 +59,7 @@ namespace FizzBuzz.Tests
         {
             var result = Program.GenerateFizzBuzz();
 
-            Assert.Contains("Fizz", result);
+            Assert.Contains("Buzz", result);
             Assert.True(result.Where(item => item.Contains("5")).All(item => item.Contains("Buzz")));
         }
     }
