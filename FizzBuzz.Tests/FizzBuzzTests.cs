@@ -55,12 +55,25 @@ namespace FizzBuzz.Tests
         }
 
         [Fact]
-        public void ShouldUseFizzReplaceTheIndexIncludingFive()
+        public void ShouldUseBuzzReplaceTheIndexIncludingFive()
         {
             var result = Program.GenerateFizzBuzz();
 
             Assert.Contains("Buzz", result);
             Assert.True(result.Where(item => item.Contains("5")).All(item => item.Contains("Buzz")));
+        }
+
+        [Fact]
+        public void ShouldUseFizzBuzzReplaceBothIncludingThreeAndFive()
+        {
+            var result = Program.GenerateFizzBuzz();
+
+            Assert.Contains("FizzBuzz", result);
+            Assert.True(
+                result.Where(item => item.Contains("3"))
+                      .Where(item => item.Contains("5"))
+                      .All(item => item.Contains("FizzBuzz"))
+                );
         }
     }
 }
