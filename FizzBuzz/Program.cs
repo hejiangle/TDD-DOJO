@@ -17,7 +17,8 @@ namespace FizzBuzz
             var index = 1;
             while (index <= 100)
             {
-                FizzBuzz.Add(index.ToString());
+                FizzBuzz.Add(index % 3 == 0 ? "Fizz" : index.ToString());
+
                 index++;
             }
 

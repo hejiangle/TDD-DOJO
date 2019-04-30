@@ -21,7 +21,7 @@ namespace FizzBuzz.Tests
             var result = Program.GenerateFizzBuzz();
 
             Assert.Contains("Fizz", result);
-            Assert.True(result.Where(item => result.IndexOf(item)%3 == 0).All(item => item.Contains("Fizz")));
+            Assert.True(result.Where(item => (result.IndexOf(item) + 1) % 3 == 0).All(item => item.Contains("Fizz")));
         }
     }
 }
