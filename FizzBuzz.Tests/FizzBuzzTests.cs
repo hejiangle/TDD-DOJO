@@ -32,5 +32,17 @@ namespace FizzBuzz.Tests
             Assert.Contains("Buzz", result);
             Assert.True(result.Where(item => (result.IndexOf(item) + 1) % 5 == 0).All(item => item.Contains("Buzz")));
         }
+
+        [Fact]
+        public void ShouldUseFizzBuzzReplaceMultipleOfThreeAndFive()
+        {
+            var result = Program.GenerateFizzBuzz();
+
+            Assert.Contains("Buzz", result);
+            Assert.True(
+                result.Where(item => (result.IndexOf(item) + 1) % 5 == 0)
+                      .Where(item => (result.IndexOf(item) + 1) % 3 == 0)
+                      .All(item => item.Contains("FizzBuzz")));
+        }
     }
 }
