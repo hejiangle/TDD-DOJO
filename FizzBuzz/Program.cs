@@ -7,7 +7,7 @@ namespace FizzBuzz
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            GenerateFizzBuzz().ForEach(Console.WriteLine);
         }
 
         public static List<string> GenerateFizzBuzz()
