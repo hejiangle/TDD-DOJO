@@ -7,9 +7,19 @@ namespace Fibonacci.Tests
         [Fact]
         public void ShouldReturn1WhenGetTheFirstElement()
         {
-            var result = Program.TakeFromFibonacci(1);
+            Assert.Equal(1, Program.TakeFromFibonacci(1));
+        }
 
-            Assert.Equal(1, result);
+        [Fact]
+        public void ShouldReturn1WhenGetTheSecondElement()
+        {
+            Assert.Equal(1, Program.TakeFromFibonacci(2));
+        }
+
+        [Fact]
+        public void ShouldReturnTheSumOfTwoElementsBeforeIndexNumber()
+        {
+            Assert.Equal(2, Program.TakeFromFibonacci(3));
         }
     }
 }
