@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace Fibonacci
 {
@@ -11,9 +12,9 @@ namespace Fibonacci
             Console.WriteLine("Hello World!");
         }
 
-        public static int TakeFromFibonacci(int index)
+        public static BigInteger TakeFromFibonacci(int index)
         {
-            var baseFibonacci = new List<int> {1, 1};
+            var baseFibonacci = new List<BigInteger> {1, 1};
 
             while (baseFibonacci.Count < index)
             {
@@ -23,7 +24,7 @@ namespace Fibonacci
             return baseFibonacci[index-1];
         }
 
-        private static List<int> Extend(List<int> baseFibonacci)
+        private static List<BigInteger> Extend(List<BigInteger> baseFibonacci)
         {
             var lastItem = baseFibonacci.Last();
             var lastSecondItem = baseFibonacci[baseFibonacci.Count-2];

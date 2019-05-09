@@ -1,3 +1,4 @@
+using System.Numerics;
 using Xunit;
 
 namespace Fibonacci.Tests
@@ -20,6 +21,14 @@ namespace Fibonacci.Tests
         public void ShouldReturnTheSumOfTwoElementsBeforeIndexNumber()
         {
             Assert.Equal(2, Program.TakeFromFibonacci(3));
+        }
+
+        [Fact]
+        public void ShouldReturnThe120Value()
+        {
+            var the120Item = BigInteger.Parse("5358359254990966640871840");
+
+            Assert.Equal(the120Item, Program.TakeFromFibonacci(120));
         }
     }
 }
