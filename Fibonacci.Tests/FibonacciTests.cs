@@ -5,22 +5,16 @@ namespace Fibonacci.Tests
 {
     public class FibonacciTests
     {
-        [Fact]
-        public void ShouldReturn1WhenGetTheFirstElement()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(2, 1)]
+        [InlineData(3, 2)]
+        [InlineData(4, 3)]
+        [InlineData(29, 514229)]
+        [InlineData(43, 433494437)]
+        public void ShouldReturnTheSumOfTwoElementsBeforeIndexNumber(int index, BigInteger value)
         {
-            Assert.Equal(1, Program.TakeFromFibonacci(1));
-        }
-
-        [Fact]
-        public void ShouldReturn1WhenGetTheSecondElement()
-        {
-            Assert.Equal(1, Program.TakeFromFibonacci(2));
-        }
-
-        [Fact]
-        public void ShouldReturnTheSumOfTwoElementsBeforeIndexNumber()
-        {
-            Assert.Equal(2, Program.TakeFromFibonacci(3));
+            Assert.Equal(value, Program.TakeFromFibonacci(index));
         }
 
         [Fact]
