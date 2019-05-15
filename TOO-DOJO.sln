@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibonacci", "Fibonacci\Fibo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibonacci.Tests", "Fibonacci.Tests\Fibonacci.Tests.csproj", "{A6CF3F47-BE5E-4A03-8718-1171A28E27EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge", "Bridge\Bridge.csproj", "{32C60CB9-D668-4431-9AB3-39B41D2A0915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Tests", "Bridge.Tests\Bridge.Tests.csproj", "{BCF4B53B-8AEB-4AB5-AC9D-FBEAF506ADF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{A6CF3F47-BE5E-4A03-8718-1171A28E27EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6CF3F47-BE5E-4A03-8718-1171A28E27EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6CF3F47-BE5E-4A03-8718-1171A28E27EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C60CB9-D668-4431-9AB3-39B41D2A0915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C60CB9-D668-4431-9AB3-39B41D2A0915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C60CB9-D668-4431-9AB3-39B41D2A0915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C60CB9-D668-4431-9AB3-39B41D2A0915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF4B53B-8AEB-4AB5-AC9D-FBEAF506ADF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF4B53B-8AEB-4AB5-AC9D-FBEAF506ADF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF4B53B-8AEB-4AB5-AC9D-FBEAF506ADF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF4B53B-8AEB-4AB5-AC9D-FBEAF506ADF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
