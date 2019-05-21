@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,33 +7,80 @@ namespace Bridge
 {
     public class Umpire
     {
-        public string CompareCards(List<string> handCards_1, List<string> handCards_2)
+        private const string WHITE_WIN_TEMPLATE = "White wins - {0}";
+        private const string BLACK_WIN_TEMPLATE = "Black wins - {0}";
+        
+        public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
         {
-            var cards_1 = handCards_1.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
-            var cards_2 = handCards_2.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
+            var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
+            var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             
             var highCard = string.Empty;
-            if (IsMessyCards(cards_1) && IsMessyCards(cards_2))
+            if (IsMessyCards(whiteCards) && IsMessyCards(blackCards))
             {
-                var index = 0;
-                while (index < 5)
+                highCard = CompareMessyCards(whiteCards, blackCards, 5);
+            }
+
+            if (IsOnePairCards(whiteCards) && IsMessyCards(blackCards))
+            {
+                highCard = string.Format(WHITE_WIN_TEMPLATE, "Pair");
+            }
+
+            if (IsMessyCards(whiteCards) && IsOnePairCards(blackCards))
+            {
+                highCard = string.Format(BLACK_WIN_TEMPLATE, "Pair");
+            }
+
+            if (IsOnePairCards(whiteCards) && IsOnePairCards(blackCards))
+            {
+                var whitePair = whiteCards.Find(x => whiteCards.Count(y => y.Number.Equals(x.Number)) == 2);
+                var blackPair = blackCards.Find(x => blackCards.Count(y => y.Number.Equals(x.Number)) == 2);
+
+                var compareResult = whitePair.CompareTo(blackPair);
+
+                if (compareResult > 0)
                 {
-                    var compareResult = cards_1[index].CompareTo(cards_2[index]);
-
-                    if (compareResult > 0)
-                    {
-                        highCard = cards_1[index].Number.ToString();
-                        break;
-                    }
-
-                    if (compareResult < 0)
-                    {
-                        highCard = cards_2[index].Number.ToString();
-                        break;
-                    }
-
-                    index++;
+                    highCard = whitePair.Number.ToString();
                 }
+
+                if (compareResult < 0)
+                {
+                    highCard = blackPair.Number.ToString();
+                }
+
+                if (compareResult == 0)
+                {
+                    whiteCards.RemoveAll(card => card.Equals(whitePair));
+                    blackCards.RemoveAll(card => card.Equals(blackPair));
+                    highCard = CompareMessyCards(whiteCards, blackCards, 3);
+                }
+            }
+
+            return highCard;
+        }
+
+        private static string CompareMessyCards(List<Card> whiteCards, List<Card> blackCards, int cardCounts)
+        {
+            var index = 0;
+            var highCard = string.Empty;
+            
+            while (index < cardCounts)
+            {
+                var compareResult = whiteCards[index].CompareTo(blackCards[index]);
+
+                if (compareResult > 0)
+                {
+                    highCard = whiteCards[index].Number.ToString();
+                    break;
+                }
+
+                if (compareResult < 0)
+                {
+                    highCard = blackCards[index].Number.ToString();
+                    break;
+                }
+
+                index++;
             }
 
             return highCard;
@@ -40,7 +88,12 @@ namespace Bridge
 
         private bool IsMessyCards(List<Card> hardCards)
         {
-            return true;
+            return !IsOnePairCards(hardCards);
+        }
+
+        private bool IsOnePairCards(List<Card> hardCards)
+        {
+            return hardCards.Distinct().Count() == 4;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Bridge
 
         public override int GetHashCode()
         {
-            return Number.GetHashCode()^Suit.GetHashCode();
+            return Number.GetHashCode();
         }
 
         public int CompareTo(Card other)
