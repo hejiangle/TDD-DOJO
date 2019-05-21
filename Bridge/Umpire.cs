@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,12 +12,13 @@ namespace Bridge
         {
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
-            
-            if (IsDoublePairsCards(whiteCards) && IsDoublePairsCards(blackCards))
+
+
+            if (IsTwoPairsCards(whiteCards) && IsTwoPairsCards(blackCards))
             {
                 return CompareDoublePairsHandCards(whiteCards, blackCards);
             }
-            if (IsDoublePairsCards(whiteCards) || IsDoublePairsCards(blackCards))
+            if (IsTwoPairsCards(whiteCards) || IsTwoPairsCards(blackCards))
             {
                 return DoublePairsWin(whiteCards, blackCards);
             }
@@ -62,14 +61,14 @@ namespace Bridge
 
         private string DoublePairsWin(List<Card> whiteCards, List<Card> blackCards)
         {
-            if (IsDoublePairsCards(whiteCards) && IsMessyCards(blackCards)
-                || IsDoublePairsCards(whiteCards) && IsOnePairCards(blackCards))
+            if (IsTwoPairsCards(whiteCards) && IsMessyCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsOnePairCards(blackCards))
             {
                 return string.Format(WHITE_WIN_TEMPLATE, "Double Pair");
             }
 
-            if (IsMessyCards(whiteCards) && IsDoublePairsCards(blackCards)
-                || IsOnePairCards(whiteCards) && IsDoublePairsCards(blackCards))
+            if (IsMessyCards(whiteCards) && IsTwoPairsCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsTwoPairsCards(blackCards))
             {
                  return string.Format(BLACK_WIN_TEMPLATE, "Double Pair");
             }
@@ -149,7 +148,7 @@ namespace Bridge
 
         private bool IsMessyCards(List<Card> hardCards)
         {
-            return !IsOnePairCards(hardCards) && !IsDoublePairsCards(hardCards);
+            return !IsOnePairCards(hardCards) && !IsTwoPairsCards(hardCards);
         }
 
         private bool IsOnePairCards(List<Card> hardCards)
@@ -157,7 +156,7 @@ namespace Bridge
             return hardCards.Distinct().Count() == 4;
         }
 
-        private bool IsDoublePairsCards(List<Card> hardCards)
+        private bool IsTwoPairsCards(List<Card> hardCards)
         {
             var index = 0;
             var pairsCount = 0;
