@@ -6,10 +6,10 @@ namespace Bridge
 {
     public class Umpire
     {
-        public string CompareCards(List<string> hardCards_1, List<string> hardCards_2)
+        public string CompareCards(List<string> handCards_1, List<string> handCards_2)
         {
-            var cards_1 = hardCards_1.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
-            var cards_2 = hardCards_2.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
+            var cards_1 = handCards_1.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
+            var cards_2 = handCards_2.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             
             var highCard = string.Empty;
             if (IsMessyCards(cards_1) && IsMessyCards(cards_2))
