@@ -12,7 +12,15 @@ namespace Bridge
         {
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
-
+            
+            if (IsThreeOfAKindCards(whiteCards) && IsThreeOfAKindCards(blackCards))
+            {
+                return CompareThreeOfAKindHandCards(whiteCards, blackCards);
+            }
+            if (IsThreeOfAKindCards(whiteCards) && IsThreeOfAKindCards(blackCards))
+            {
+                return ThreeOfAKindWin(whiteCards, blackCards);
+            }
 
             if (IsTwoPairsCards(whiteCards) && IsTwoPairsCards(blackCards))
             {
@@ -34,6 +42,54 @@ namespace Bridge
 
             return CompareMessyCards(whiteCards, blackCards, 5);
         }
+
+        private string ThreeOfAKindWin(List<Card> whiteCards, List<Card> blackCards)
+        {
+            if (IsThreeOfAKindCards(whiteCards) && IsMessyCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsOnePairCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsTwoPairsCards(blackCards))
+            {
+                return string.Format(WHITE_WIN_TEMPLATE, "Three Of a kind");
+            }
+
+            if (IsMessyCards(whiteCards) && IsThreeOfAKindCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsThreeOfAKindCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsThreeOfAKindCards(blackCards))
+            {
+                return string.Format(BLACK_WIN_TEMPLATE, "Three Of a kind");
+            }
+
+            return "Tie";
+        }
+
+        private string CompareThreeOfAKindHandCards(List<Card> whiteCards, List<Card> blackCards)
+        {
+            var whiteThreeOfAKind = whiteCards.Find(x => whiteCards.Count(y => y.Number.Equals(x.Number)) == 3);
+            var blackThreeOfAKind = blackCards.Find(x => blackCards.Count(y => y.Number.Equals(x.Number)) == 3);
+            
+            var compareResult = whiteThreeOfAKind.CompareTo(blackThreeOfAKind);
+            var highCard = "Tie";
+
+            if (compareResult > 0)
+            {
+                highCard = whiteThreeOfAKind.Number.ToString();
+            }
+
+            if (compareResult < 0)
+            {
+                highCard = blackThreeOfAKind.Number.ToString();
+            }
+
+            if (compareResult == 0)
+            {
+                whiteCards.RemoveAll(card => card.Equals(whiteThreeOfAKind));
+                blackCards.RemoveAll(card => card.Equals(blackThreeOfAKind));
+                highCard = CompareMessyCards(whiteCards, blackCards, 2);
+            }
+
+            return highCard;
+        }
+
 
         private string CompareDoublePairsHandCards(List<Card> whiteCards, List<Card> blackCards)
         {
@@ -172,6 +228,11 @@ namespace Bridge
             }
 
             return pairsCount == 2 && hardCards.Distinct().Count() == 3;
+        }
+        
+        private bool IsThreeOfAKindCards(List<Card> hardCards)
+        {
+            return !IsTwoPairsCards(hardCards) && hardCards.Distinct().Count() == 3;
         }
     }
 }

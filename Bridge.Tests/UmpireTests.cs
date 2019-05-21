@@ -47,7 +47,7 @@ namespace Bridge.Tests
         {
             new object[]{new List<string> { "2H", "2D", "2S", "5C", "KD"}, new List<string> {"3C", "3H", "3S", "4C", "AH"}, "3"},
             new object[]{new List<string> { "2H", "9D", "2S", "2C", "QD"}, new List<string> {"4C", "QH", "4S", "TC", "4H"}, "4"},
-            new object[]{new List<string> { "2H", "3D", "QS", "QC", "QD"}, new List<string> {"2C", "4H", "QS", "QC", "QH"}, "4"},
+            new object[]{new List<string> { "2H", "3D", "QS", "QC", "QD"}, new List<string> {"2C", "5H", "QS", "QC", "QH"}, "5"},
             new object[]{new List<string> { "2H", "2D", "2S", "TC", "QD"}, new List<string> {"2C", "2H", "2S", "TC", "QH"}, "Tie"},
         };
     }
