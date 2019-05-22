@@ -1,24 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
+using static Bridge.Constants.StringConstant;
 
 namespace Bridge
 {
     public class Umpire
     {
-        private const string WHITE_WIN_TEMPLATE = "White wins - {0}";
-        private const string BLACK_WIN_TEMPLATE = "Black wins - {0}";
-        private const string TIE = "Tie";
-        private const string CHEAT = "Cheat!!!";
-
-        private const string STRAIGHT_FLUSH = "Straight flush";
-        private const string FOUR_OF_A_KIND = "Four of a Kind";
-        private const string FULL_HOUSE = "Full house";
-        private const string FLUSH = "Flush";
-        private const string STRAIGHT = "Straight";
-        private const string THREE_OF_A_KIND = "Three of a Kind";
-        private const string TWO_PAIRS = "Two pairs";
-        private const string PAIR = "Pair";
-        
         public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
         {
             var whiteCards = new DescendingHandCards(whiteHandCards);
