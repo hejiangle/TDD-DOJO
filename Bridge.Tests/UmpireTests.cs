@@ -10,6 +10,7 @@ namespace Bridge.Tests
         [MemberData(nameof(OnePairHandCards))]
         [MemberData(nameof(TwoPairsHandCards))]
         [MemberData(nameof(ThreeOfAKindHandCards))]
+        [MemberData(nameof(StraightHandCards))]
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
             var umpire = new Umpire();
@@ -49,6 +50,19 @@ namespace Bridge.Tests
             new object[]{new List<string> { "2H", "9D", "2S", "2C", "QD"}, new List<string> {"4C", "QH", "4S", "TC", "4H"}, "4"},
             new object[]{new List<string> { "2H", "3D", "QS", "QC", "QD"}, new List<string> {"2C", "5H", "QS", "QC", "QH"}, "5"},
             new object[]{new List<string> { "2H", "2D", "2S", "TC", "QD"}, new List<string> {"2C", "2H", "2S", "TC", "QH"}, "Tie"},
+        };
+
+        public static IEnumerable<object[]> StraightHandCards => new List<object[]>
+        {
+            new object[]{new List<string> { "2H", "3D", "4S", "5C", "6D"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "9"},
+            new object[]{new List<string> { "2H", "3D", "4S", "5C", "6D"}, new List<string> {"4C", "5H", "6S", "7C", "8H"}, "8"},
+            new object[]{new List<string> { "9H", "TD", "JS", "QC", "KD"}, new List<string> {"TC", "JH", "QS", "KC", "AH"}, "A"},
+            new object[]{new List<string> { "2H", "3D", "4S", "5C", "6D"}, new List<string> {"2C", "3H", "4S", "5C", "6H"}, "Tie"},
+            new object[]{new List<string> { "2H", "2D", "2S", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
+            new object[]{new List<string> { "2H", "2D", "TS", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
+            new object[]{new List<string> { "2H", "2D", "9S", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
+            new object[]{new List<string> { "AH", "2D", "9S", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
+
         };
     }
 }
