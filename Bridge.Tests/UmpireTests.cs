@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bridge.RuleCheckers;
 using Xunit;
 
 namespace Bridge.Tests
@@ -17,7 +18,7 @@ namespace Bridge.Tests
         [MemberData(nameof(StraightFlushHandCards))]
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
-            var umpire = new Umpire();
+            var umpire = new Umpire(new StraightFlushWinChecker());
 
             var theHighestCard = umpire.CompareCards(hardCards_1, hardCards_2);
             

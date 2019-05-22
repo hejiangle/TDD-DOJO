@@ -1,10 +1,18 @@
 using System.Collections.Generic;
+using Bridge.RuleCheckers;
 using static Bridge.Constants.StringConstant;
 
 namespace Bridge
 {
     public class Umpire
     {
+        private readonly StraightFlushWinChecker _straightFlushWinChecker;
+
+        public Umpire(StraightFlushWinChecker straightFlushWinChecker)
+        {
+            _straightFlushWinChecker = straightFlushWinChecker;
+        }
+
         public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
         {
             var whiteCards = new DescendingHandCards(whiteHandCards);
@@ -16,7 +24,7 @@ namespace Bridge
             }
             if (whiteCards.IsStraightFlushCards() || blackCards.IsStraightFlushCards())
             {
-                return StraightFlushWin(whiteCards, blackCards);
+                return _straightFlushWinChecker.DirectlyWin(whiteCards, blackCards);
             }
 
             if (whiteCards.IsFourOfAKindCards() && blackCards.IsFourOfAKindCards())
@@ -85,22 +93,7 @@ namespace Bridge
             return CompareMessyCards(whiteCards, blackCards, 5);
         }
 
-        private string StraightFlushWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
-        {
-            if (whiteCards.IsStraightFlushCards() 
-                && !blackCards.IsStraightFlushCards())
-            {
-                return string.Format(WHITE_WIN_TEMPLATE, STRAIGHT_FLUSH);
-            }
-
-            if (!whiteCards.IsStraightFlushCards()
-                && blackCards.IsStraightFlushCards())
-            {
-                return string.Format(BLACK_WIN_TEMPLATE, STRAIGHT_FLUSH);
-            }
-
-            return TIE;
-        }
+        
 
         private string FullHouseWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
         {
