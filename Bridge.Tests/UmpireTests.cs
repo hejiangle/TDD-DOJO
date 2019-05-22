@@ -14,6 +14,7 @@ namespace Bridge.Tests
         [MemberData(nameof(FlushHandCards))]
         [MemberData(nameof(FullHouseHandCards))]
         [MemberData(nameof(FourOfAKindHandCards))]
+        [MemberData(nameof(StraightFlushHandCards))]
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
             var umpire = new Umpire();
@@ -107,7 +108,21 @@ namespace Bridge.Tests
             new object[]{new List<string> { "5H", "6H", "7H", "8H", "TH"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Four of a Kind"},
             new object[]{new List<string> { "TH", "JD", "QS", "KC", "AD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Four of a Kind"},
             new object[]{new List<string> { "8C", "8H", "8D", "AS", "AH"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Four of a Kind"},
+        };
 
+        public static IEnumerable<object[]> StraightFlushHandCards => new List<object[]>
+        {
+            new object[]{new List<string> { "2C", "3C", "4C", "5C", "6C"}, new List<string> {"3D", "4D", "5D", "6D", "7D"}, "7"},
+            new object[]{new List<string> { "2C", "3C", "4C", "5C", "6C"}, new List<string> {"2H", "3H", "4H", "5H", "6H"}, "Tie"},
+            new object[]{new List<string> { "TS", "JS", "QS", "KS", "AS"}, new List<string> {"9C", "TC", "JC", "QC", "KC"}, "A"},
+            new object[]{new List<string> { "2H", "2D", "2S", "TC", "QD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "2H", "2D", "TS", "TC", "QD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "2H", "2D", "9S", "TC", "QD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "AH", "2D", "9S", "TC", "QD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "5H", "6H", "7H", "8H", "TH"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "TH", "JD", "QS", "KC", "AD"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "8C", "8H", "8D", "AS", "AH"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
+            new object[]{new List<string> { "8C", "8H", "8D", "8S", "AH"}, new List<string> {"8C", "8H", "8D", "8S", "AH"}, "Black wins - Straight Flush"},
         };
     }
 }
