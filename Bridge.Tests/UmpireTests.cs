@@ -11,6 +11,7 @@ namespace Bridge.Tests
         [MemberData(nameof(TwoPairsHandCards))]
         [MemberData(nameof(ThreeOfAKindHandCards))]
         [MemberData(nameof(StraightHandCards))]
+        [MemberData(nameof(FlushHandCards))]
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
             var umpire = new Umpire();
@@ -62,7 +63,19 @@ namespace Bridge.Tests
             new object[]{new List<string> { "2H", "2D", "TS", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
             new object[]{new List<string> { "2H", "2D", "9S", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
             new object[]{new List<string> { "AH", "2D", "9S", "TC", "QD"}, new List<string> {"5C", "6H", "7S", "8C", "9H"}, "Black wins - Straight"},
+        };
 
+        public static IEnumerable<object[]> FlushHandCards => new List<object[]>
+        {
+            new object[]{new List<string> { "2H", "3H", "4H", "5H", "9H"}, new List<string> {"5H", "6H", "7H", "8H", "9H"}, "8"},
+            new object[]{new List<string> { "2D", "3D", "4D", "5D", "8D"}, new List<string> {"4H", "5H", "6H", "7H", "2H"}, "8"},
+            new object[]{new List<string> { "9S", "TS", "JS", "8S", "KS"}, new List<string> {"TC", "JC", "QC", "KC", "8C"}, "Q"},
+            new object[]{new List<string> { "2H", "3H", "4H", "5H", "7H"}, new List<string> {"2C", "3C", "4C", "5C", "7C"}, "Tie"},
+            new object[]{new List<string> { "2H", "2D", "2S", "TC", "QD"}, new List<string> {"5H", "6H", "7H", "8H", "TH"}, "Black wins - Flush"},
+            new object[]{new List<string> { "2H", "2D", "TS", "TC", "QD"}, new List<string> {"5H", "6H", "7H", "8H", "TH"}, "Black wins - Flush"},
+            new object[]{new List<string> { "2H", "2D", "9S", "TC", "QD"}, new List<string> {"5H", "6H", "7H", "8H", "TH"}, "Black wins - Flush"},
+            new object[]{new List<string> { "AH", "2D", "9S", "TC", "QD"}, new List<string> {"5H", "6H", "7H", "8H", "TH"}, "Black wins - Flush"},
+            new object[]{new List<string> { "TH", "JD", "QS", "KC", "AD"}, new List<string> {"5H", "6H", "7H", "8H", "TH"}, "Black wins - Flush"},
         };
     }
 }
