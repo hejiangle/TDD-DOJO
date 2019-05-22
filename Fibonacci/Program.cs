@@ -9,12 +9,13 @@ namespace Fibonacci
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
+            Console.WriteLine(TakeFromFibonacci(12));
         }
 
         public static BigInteger TakeFromFibonacci(int index)
         {
-            var baseFibonacci = new List<BigInteger> {1, 1};
+            var baseFibonacci = new List<BigInteger> {1, 1, 1};
 
             while (baseFibonacci.Count < index)
             {
@@ -28,7 +29,8 @@ namespace Fibonacci
         {
             var lastItem = baseFibonacci.Last();
             var lastSecondItem = baseFibonacci[baseFibonacci.Count-2];
-            baseFibonacci.Add(lastItem + lastSecondItem);
+            var lastThirdItem = baseFibonacci[baseFibonacci.Count - 3];
+            baseFibonacci.Add(lastItem + lastSecondItem + lastThirdItem);
 
             return baseFibonacci;
         }
