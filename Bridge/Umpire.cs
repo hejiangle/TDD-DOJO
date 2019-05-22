@@ -139,19 +139,9 @@ namespace Bridge
             var whiteThreeOfAKind = whiteCards.GetSameNumberCardByCount(3);
             var blackThreeOfAKind = blackCards.GetSameNumberCardByCount(3);
 
-            var compareResult = whiteThreeOfAKind.CompareTo(blackThreeOfAKind);
+            var compareResult = whiteThreeOfAKind.CompareWith(blackThreeOfAKind);
             
-            if (compareResult > 0)
-            {
-                return whiteThreeOfAKind.Number.ToString();
-            }
-
-            if (compareResult < 0)
-            {
-                return blackThreeOfAKind.Number.ToString();
-            }
-            
-            return CHEAT;
+            return compareResult.Equals(TIE) ? CHEAT : compareResult;
         }
 
         private string FourOfAKindCardsWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -178,19 +168,9 @@ namespace Bridge
             var whiteFullHouseCard = whiteCards.GetSameNumberCardByCount(4);
             var blackFullHouseCard = blackCards.GetSameNumberCardByCount(4);
 
-            var compareResult = whiteFullHouseCard.CompareTo(blackFullHouseCard);
-
-            if (compareResult > 0)
-            {
-                return whiteFullHouseCard.Number.ToString();
-            }
-
-            if (compareResult < 0)
-            {
-                return blackFullHouseCard.Number.ToString();
-            }
-
-            return CHEAT;
+            var compareResult = whiteFullHouseCard.CompareWith(blackFullHouseCard);
+            
+            return compareResult.Equals(TIE) ? CHEAT : compareResult;
         }
 
         private string FlushCardsWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -242,19 +222,7 @@ namespace Bridge
             var theMaxValueWhiteCard = whiteCards.GetTheMaxValueCard();
             var theMaxValueBlackCard = blackCards.GetTheMaxValueCard();
             
-            var compareResult = theMaxValueWhiteCard.CompareTo(theMaxValueBlackCard);
-            
-            if (compareResult > 0)
-            {
-               return theMaxValueWhiteCard.Number.ToString();
-            }
-
-            if (compareResult < 0)
-            {
-                return theMaxValueBlackCard.Number.ToString();
-            }
-
-            return TIE;
+            return theMaxValueWhiteCard.CompareWith(theMaxValueBlackCard);
         }
 
         private string ThreeOfAKindWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -283,19 +251,9 @@ namespace Bridge
             var whiteThreeOfAKind = whiteCards.GetSameNumberCardByCount(3);
             var blackThreeOfAKind = blackCards.GetSameNumberCardByCount(3);
             
-            var compareResult = whiteThreeOfAKind.CompareTo(blackThreeOfAKind);
+            var compareResult = whiteThreeOfAKind.CompareWith(blackThreeOfAKind);
 
-            if (compareResult > 0)
-            {
-                return whiteThreeOfAKind.Number.ToString();
-            }
-
-            if (compareResult < 0)
-            {
-                return blackThreeOfAKind.Number.ToString();
-            }
-
-            return CHEAT;
+            return compareResult.Equals(TIE) ? CHEAT : compareResult;
         }
 
 
@@ -332,21 +290,16 @@ namespace Bridge
             return TIE;
         }
 
-        private static string CompareOnePairHandCards(DescendingHandCards whiteCards, DescendingHandCards blackCards)
+        private string CompareOnePairHandCards(DescendingHandCards whiteCards, DescendingHandCards blackCards)
         {
             var whitePair = whiteCards.GetSameNumberCardByCount(2);
             var blackPair = blackCards.GetSameNumberCardByCount(2);
 
-            var compareResult = whitePair.CompareTo(blackPair);
+            var compareResult = whitePair.CompareWith(blackPair);
 
-            if (compareResult > 0)
+            if (!compareResult.Equals(TIE))
             {
-                return whitePair.Number.ToString();
-            }
-
-            if (compareResult < 0)
-            {
-                return blackPair.Number.ToString();
+                return compareResult;
             }
 
             var whiteSingleCards = whiteCards.GetSingleCards();
@@ -378,16 +331,11 @@ namespace Bridge
                 var whiteCard = whiteCards.GetCardByIndex(index);
                 var blackCard = blackCards.GetCardByIndex(index);
                 
-                var compareResult = whiteCard.CompareTo(blackCard);
+                var compareResult = whiteCard.CompareWith(blackCard);
 
-                if (compareResult > 0)
+                if (!compareResult.Equals(TIE))
                 {
-                    return whiteCard.Number.ToString();
-                }
-
-                if (compareResult < 0)
-                {
-                    return blackCard.Number.ToString();
+                    return compareResult;
                 }
 
                 index++;

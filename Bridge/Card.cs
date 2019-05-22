@@ -54,5 +54,22 @@ namespace Bridge
             var numberComparison = Value.CompareTo(other.Value);
             return numberComparison;
         }
+
+        public string CompareWith(Card other)
+        {
+            var compareResult = CompareTo(other);
+
+            if (compareResult > 0)
+            {
+                return Number.ToString();
+            }
+
+            if (compareResult < 0)
+            {
+                return other.Number.ToString();
+            }
+
+            return "Tie";
+        }
     }
 }
