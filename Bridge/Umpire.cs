@@ -13,6 +13,15 @@ namespace Bridge
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
 
+            if (IsFourOfAKindCards(whiteCards) && IsFourOfAKindCards(blackCards))
+            {
+                return CompareFourOfAKindHandCards(whiteCards, blackCards);
+            }
+            if (IsFourOfAKindCards(whiteCards) || IsFourOfAKindCards(blackCards))
+            {
+                return FourOfAKindCardsWin(whiteCards, blackCards);
+            }
+
             if (IsFlushCards(whiteCards) && IsFlushCards(blackCards))
             {
                 return CompareMessyCards(whiteCards, blackCards, 5);
@@ -59,6 +68,51 @@ namespace Bridge
             }
 
             return CompareMessyCards(whiteCards, blackCards, 5);
+        }
+
+        private string FourOfAKindCardsWin(List<Card> whiteCards, List<Card> blackCards)
+        {
+            if (IsFourOfAKindCards(whiteCards) && IsMessyCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsOnePairCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsTwoPairsCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsThreeOfAKindCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsStraightCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsFlushCards(blackCards))
+            {
+                return string.Format(WHITE_WIN_TEMPLATE, "Four of a Kind");
+            }
+
+            if (IsMessyCards(whiteCards) && IsFourOfAKindCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsFourOfAKindCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsFourOfAKindCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsFourOfAKindCards(blackCards)
+                || IsStraightCards(whiteCards) && IsFourOfAKindCards(blackCards)
+                || IsFlushCards(whiteCards) && IsFourOfAKindCards(blackCards))
+            {
+                return string.Format(BLACK_WIN_TEMPLATE, "Four of a Kind");
+            }
+
+            return "Tie";
+        }
+
+        private string CompareFourOfAKindHandCards(List<Card> whiteCards, List<Card> blackCards)
+        {
+            var whiteFullHouseCard = whiteCards.Find(x => whiteCards.Count(y => y.Number.Equals(x.Number)) == 4);
+            var blackFullHouseCard = blackCards.Find(x => blackCards.Count(y => y.Number.Equals(x.Number)) == 4);
+
+            var compareResult = whiteFullHouseCard.CompareTo(blackFullHouseCard);
+
+            if (compareResult > 0)
+            {
+                return whiteFullHouseCard.Number.ToString();
+            }
+
+            if (compareResult < 0)
+            {
+                return blackFullHouseCard.Number.ToString();
+            }
+
+            return "Cheat!!!";
         }
 
         private string FlushCardsWin(List<Card> whiteCards, List<Card> blackCards)
@@ -327,5 +381,9 @@ namespace Bridge
             return handCards.All(card => card.Suit.Equals(handCards.First().Suit));
         }
 
+        private bool IsFourOfAKindCards(List<Card> handCards)
+        {
+            return handCards.Distinct().Count() == 2;
+        }
     }
 }
