@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,15 @@ namespace Bridge
         {
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
+
+            if (IsStraightFlushCards(whiteCards) && IsStraightFlushCards(blackCards))
+            {
+                return CompareStraightHandCards(whiteCards, blackCards);
+            }
+            if (IsStraightFlushCards(whiteCards) || IsStraightFlushCards(blackCards))
+            {
+                return StraightFlushWin(whiteCards, blackCards);
+            }
 
             if (IsFourOfAKindCards(whiteCards) && IsFourOfAKindCards(blackCards))
             {
@@ -77,6 +87,35 @@ namespace Bridge
             }
 
             return CompareMessyCards(whiteCards, blackCards, 5);
+        }
+
+        private string StraightFlushWin(List<Card> whiteCards, List<Card> blackCards)
+        {
+            if (IsStraightFlushCards(whiteCards) && IsMessyCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsOnePairCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsTwoPairsCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsThreeOfAKindCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsStraightCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsFlushCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsFullHouseCards(blackCards)
+                || IsStraightFlushCards(whiteCards) && IsFourOfAKindCards(blackCards))
+            {
+                return string.Format(WHITE_WIN_TEMPLATE, "Straight Flush");
+            }
+
+            if (IsMessyCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsStraightCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsFlushCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsFullHouseCards(whiteCards) && IsStraightFlushCards(blackCards)
+                || IsFourOfAKindCards(whiteCards) && IsStraightFlushCards(blackCards))
+            {
+                return string.Format(BLACK_WIN_TEMPLATE, "Straight Flush");
+            }
+
+            return "Tie";
         }
 
         private string FullHouseWin(List<Card> whiteCards, List<Card> blackCards)
@@ -446,6 +485,11 @@ namespace Bridge
         private bool IsFourOfAKindCards(List<Card> handCards)
         {
             return handCards.Exists(x => handCards.Count(y => y.Equals(x)) == 4);
+        }
+
+        private bool IsStraightFlushCards(List<Card> handCards)
+        {
+            return IsFlushCards(handCards) && IsStraightCards(handCards);
         }
     }
 }
