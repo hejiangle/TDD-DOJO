@@ -13,6 +13,15 @@ namespace Bridge
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
 
+            if (IsFlushCards(whiteCards) && IsFlushCards(blackCards))
+            {
+                return CompareMessyCards(whiteCards, blackCards, 5);
+            }
+            if (IsFlushCards(whiteCards) || IsFlushCards(blackCards))
+            {
+                return FlushCardsWin(whiteCards, blackCards);
+            }
+
             if (IsStraightCards(whiteCards) && IsStraightCards(blackCards))
             {
                 return CompareStraightHandCards(whiteCards, blackCards);
@@ -50,6 +59,29 @@ namespace Bridge
             }
 
             return CompareMessyCards(whiteCards, blackCards, 5);
+        }
+
+        private string FlushCardsWin(List<Card> whiteCards, List<Card> blackCards)
+        {
+            if (IsFlushCards(whiteCards) && IsMessyCards(blackCards)
+                || IsFlushCards(whiteCards) && IsOnePairCards(blackCards)
+                || IsFlushCards(whiteCards) && IsTwoPairsCards(blackCards)
+                || IsFlushCards(whiteCards) && IsThreeOfAKindCards(blackCards)
+                || IsFlushCards(whiteCards) && IsStraightCards(blackCards))
+            {
+                return string.Format(WHITE_WIN_TEMPLATE, "Flush");
+            }
+
+            if (IsMessyCards(whiteCards) && IsFlushCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsFlushCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsFlushCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsFlushCards(blackCards)
+                || IsStraightCards(whiteCards) && IsFlushCards(blackCards))
+            {
+                return string.Format(BLACK_WIN_TEMPLATE, "Flush");
+            }
+
+            return "Tie";
         }
 
         private string StraightCardsWin(List<Card> whiteCards, List<Card> blackCards)
@@ -288,6 +320,11 @@ namespace Bridge
         private bool IsStraightCards(List<Card> handCards)
         {
             return handCards.All(card => (card.Value + handCards.IndexOf(card)).Equals(handCards.First().Value));
+        }
+
+        private bool IsFlushCards(List<Card> handCards)
+        {
+            return handCards.All(card => card.Suit.Equals(handCards.First().Suit));
         }
 
     }
