@@ -12,7 +12,16 @@ namespace Bridge
         {
             var whiteCards = whiteHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
             var blackCards = blackHandCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
-            
+
+            if (IsStraightCards(whiteCards) && IsStraightCards(blackCards))
+            {
+                return CompareStraightHandCards(whiteCards, blackCards);
+            }
+            if (IsStraightCards(whiteCards) || IsStraightCards(blackCards))
+            {
+                return StraightCardsWin(whiteCards, blackCards);
+            }
+
             if (IsThreeOfAKindCards(whiteCards) && IsThreeOfAKindCards(blackCards))
             {
                 return CompareThreeOfAKindHandCards(whiteCards, blackCards);
@@ -41,6 +50,46 @@ namespace Bridge
             }
 
             return CompareMessyCards(whiteCards, blackCards, 5);
+        }
+
+        private string StraightCardsWin(List<Card> whiteCards, List<Card> blackCards)
+        {
+            if (IsStraightCards(whiteCards) && IsMessyCards(blackCards)
+                || IsStraightCards(whiteCards) && IsOnePairCards(blackCards)
+                || IsStraightCards(whiteCards) && IsTwoPairsCards(blackCards)
+                || IsStraightCards(whiteCards) && IsThreeOfAKindCards(blackCards))
+            {
+                return string.Format(WHITE_WIN_TEMPLATE, "Straight");
+            }
+
+            if (IsMessyCards(whiteCards) && IsStraightCards(blackCards)
+                || IsOnePairCards(whiteCards) && IsStraightCards(blackCards)
+                || IsTwoPairsCards(whiteCards) && IsStraightCards(blackCards)
+                || IsThreeOfAKindCards(whiteCards) && IsStraightCards(blackCards))
+            {
+                return string.Format(BLACK_WIN_TEMPLATE, "Straight");
+            }
+
+            return "Tie";
+        }
+
+        private string CompareStraightHandCards(List<Card> whiteCards, List<Card> blackCards)
+        {
+            var highCard = "Tie";
+
+            var compareResult = whiteCards.First().CompareTo(blackCards.First());
+            
+            if (compareResult > 0)
+            {
+                highCard = whiteCards.First().Number.ToString();
+            }
+
+            if (compareResult < 0)
+            {
+                highCard = blackCards.First().Number.ToString();
+            }
+
+            return highCard;
         }
 
         private string ThreeOfAKindWin(List<Card> whiteCards, List<Card> blackCards)
@@ -202,23 +251,23 @@ namespace Bridge
             return highCard;
         }
 
-        private bool IsMessyCards(List<Card> hardCards)
+        private bool IsMessyCards(List<Card> handCards)
         {
-            return !IsOnePairCards(hardCards) && !IsTwoPairsCards(hardCards);
+            return !IsOnePairCards(handCards) && !IsTwoPairsCards(handCards) && !IsThreeOfAKindCards(handCards) && !IsStraightCards(handCards);
         }
 
-        private bool IsOnePairCards(List<Card> hardCards)
+        private bool IsOnePairCards(List<Card> handCards)
         {
-            return hardCards.Distinct().Count() == 4;
+            return handCards.Distinct().Count() == 4;
         }
 
-        private bool IsTwoPairsCards(List<Card> hardCards)
+        private bool IsTwoPairsCards(List<Card> handCards)
         {
             var index = 0;
             var pairsCount = 0;
             while (index < 4)
             {
-                if (hardCards[index].Equals(hardCards[index + 1]))
+                if (handCards[index].Equals(handCards[index + 1]))
                 {
                     pairsCount++;
                     index++;
@@ -227,12 +276,19 @@ namespace Bridge
                 index++;
             }
 
-            return pairsCount == 2 && hardCards.Distinct().Count() == 3;
+            return pairsCount == 2 && handCards.Distinct().Count() == 3;
         }
         
-        private bool IsThreeOfAKindCards(List<Card> hardCards)
+        private bool IsThreeOfAKindCards(List<Card> handCards)
         {
-            return !IsTwoPairsCards(hardCards) && hardCards.Distinct().Count() == 3;
+            return !IsTwoPairsCards(handCards) && handCards.Distinct().Count() == 3;
         }
+        
+        
+        private bool IsStraightCards(List<Card> handCards)
+        {
+            return handCards.All(card => (card.Value + handCards.IndexOf(card)).Equals(handCards.First().Value));
+        }
+
     }
 }
