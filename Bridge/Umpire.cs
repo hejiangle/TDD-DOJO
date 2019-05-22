@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +7,17 @@ namespace Bridge
     {
         private const string WHITE_WIN_TEMPLATE = "White wins - {0}";
         private const string BLACK_WIN_TEMPLATE = "Black wins - {0}";
+        private const string TIE = "Tie";
+        private const string CHEAT = "Cheat!!!";
+
+        private const string STRAIGHT_FLUSH = "Straight flush";
+        private const string FOUR_OF_A_KIND = "Four of a Kind";
+        private const string FULL_HOUSE = "Full house";
+        private const string FLUSH = "Flush";
+        private const string STRAIGHT = "Straight";
+        private const string THREE_OF_A_KIND = "Three of a Kind";
+        private const string TWO_PAIRS = "Two pairs";
+        private const string PAIR = "Pair";
         
         public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
         {
@@ -100,7 +110,7 @@ namespace Bridge
                 || IsStraightFlushCards(whiteCards) && IsFullHouseCards(blackCards)
                 || IsStraightFlushCards(whiteCards) && IsFourOfAKindCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Straight Flush");
+                return string.Format(WHITE_WIN_TEMPLATE, STRAIGHT_FLUSH);
             }
 
             if (IsMessyCards(whiteCards) && IsStraightFlushCards(blackCards)
@@ -112,10 +122,10 @@ namespace Bridge
                 || IsFullHouseCards(whiteCards) && IsStraightFlushCards(blackCards)
                 || IsFourOfAKindCards(whiteCards) && IsStraightFlushCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Straight Flush");
+                return string.Format(BLACK_WIN_TEMPLATE, STRAIGHT_FLUSH);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private string FullHouseWin(List<Card> whiteCards, List<Card> blackCards)
@@ -127,7 +137,7 @@ namespace Bridge
                 || IsFullHouseCards(whiteCards) && IsStraightCards(blackCards)
                 || IsFullHouseCards(whiteCards) && IsFlushCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "FullHouse");
+                return string.Format(WHITE_WIN_TEMPLATE, FULL_HOUSE);
             }
 
             if (IsMessyCards(whiteCards) && IsFullHouseCards(blackCards)
@@ -137,10 +147,10 @@ namespace Bridge
                 || IsStraightCards(whiteCards) && IsFullHouseCards(blackCards)
                 || IsFlushCards(whiteCards) && IsFullHouseCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "FullHouse");
+                return string.Format(BLACK_WIN_TEMPLATE, FULL_HOUSE);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private string CompareFullHouseHandCards(List<Card> whiteCards, List<Card> blackCards)
@@ -160,7 +170,7 @@ namespace Bridge
                 return blackThreeOfAKind.Number.ToString();
             }
             
-            return "Cheat!!!";
+            return CHEAT;
         }
 
         private string FourOfAKindCardsWin(List<Card> whiteCards, List<Card> blackCards)
@@ -173,7 +183,7 @@ namespace Bridge
                 || IsFourOfAKindCards(whiteCards) && IsFlushCards(blackCards)
                 || IsFourOfAKindCards(whiteCards) && IsFullHouseCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Four of a Kind");
+                return string.Format(WHITE_WIN_TEMPLATE, FOUR_OF_A_KIND);
             }
 
             if (IsMessyCards(whiteCards) && IsFourOfAKindCards(blackCards)
@@ -184,10 +194,10 @@ namespace Bridge
                 || IsFlushCards(whiteCards) && IsFourOfAKindCards(blackCards)
                 || IsFullHouseCards(whiteCards) && IsFourOfAKindCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Four of a Kind");
+                return string.Format(BLACK_WIN_TEMPLATE, FOUR_OF_A_KIND);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private string CompareFourOfAKindHandCards(List<Card> whiteCards, List<Card> blackCards)
@@ -207,7 +217,7 @@ namespace Bridge
                 return blackFullHouseCard.Number.ToString();
             }
 
-            return "Cheat!!!";
+            return CHEAT;
         }
 
         private string FlushCardsWin(List<Card> whiteCards, List<Card> blackCards)
@@ -218,7 +228,7 @@ namespace Bridge
                 || IsFlushCards(whiteCards) && IsThreeOfAKindCards(blackCards)
                 || IsFlushCards(whiteCards) && IsStraightCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Flush");
+                return string.Format(WHITE_WIN_TEMPLATE, FLUSH);
             }
 
             if (IsMessyCards(whiteCards) && IsFlushCards(blackCards)
@@ -227,10 +237,10 @@ namespace Bridge
                 || IsThreeOfAKindCards(whiteCards) && IsFlushCards(blackCards)
                 || IsStraightCards(whiteCards) && IsFlushCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Flush");
+                return string.Format(BLACK_WIN_TEMPLATE, FLUSH);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private string StraightCardsWin(List<Card> whiteCards, List<Card> blackCards)
@@ -240,7 +250,7 @@ namespace Bridge
                 || IsStraightCards(whiteCards) && IsTwoPairsCards(blackCards)
                 || IsStraightCards(whiteCards) && IsThreeOfAKindCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Straight");
+                return string.Format(WHITE_WIN_TEMPLATE, STRAIGHT);
             }
 
             if (IsMessyCards(whiteCards) && IsStraightCards(blackCards)
@@ -248,15 +258,15 @@ namespace Bridge
                 || IsTwoPairsCards(whiteCards) && IsStraightCards(blackCards)
                 || IsThreeOfAKindCards(whiteCards) && IsStraightCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Straight");
+                return string.Format(BLACK_WIN_TEMPLATE, STRAIGHT);
             }
 
-            return "Tie";
+            return CHEAT;
         }
 
         private string CompareStraightHandCards(List<Card> whiteCards, List<Card> blackCards)
         {
-            var highCard = "Tie";
+            var highCard = TIE;
 
             var compareResult = whiteCards.First().CompareTo(blackCards.First());
             
@@ -279,17 +289,17 @@ namespace Bridge
                 || IsThreeOfAKindCards(whiteCards) && IsOnePairCards(blackCards)
                 || IsThreeOfAKindCards(whiteCards) && IsTwoPairsCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Three Of a kind");
+                return string.Format(WHITE_WIN_TEMPLATE, THREE_OF_A_KIND);
             }
 
             if (IsMessyCards(whiteCards) && IsThreeOfAKindCards(blackCards)
                 || IsOnePairCards(whiteCards) && IsThreeOfAKindCards(blackCards)
                 || IsTwoPairsCards(whiteCards) && IsThreeOfAKindCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Three Of a kind");
+                return string.Format(BLACK_WIN_TEMPLATE, THREE_OF_A_KIND);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private string CompareThreeOfAKindHandCards(List<Card> whiteCards, List<Card> blackCards)
@@ -298,7 +308,7 @@ namespace Bridge
             var blackThreeOfAKind = blackCards.Find(x => blackCards.Count(y => y.Equals(x)) == 3);
             
             var compareResult = whiteThreeOfAKind.CompareTo(blackThreeOfAKind);
-            var highCard = "Cheat!!!";
+            var highCard = CHEAT;
 
             if (compareResult > 0)
             {
@@ -325,17 +335,17 @@ namespace Bridge
         private string CompareDoublePairsHandCards(List<Card> whiteCards, List<Card> blackCards)
         {
             var whitePairs = whiteCards
-                .Where(x => whiteCards.Count(y => y.Number.Equals(x.Number)) == 2)
+                .Where(x => whiteCards.Count(y => y.Equals(x)) == 2)
                 .Distinct()
                 .ToList();
             var blackPairs = blackCards
-                .Where(x => blackCards.Count(y => y.Number.Equals(x.Number)) == 2)
+                .Where(x => blackCards.Count(y => y.Equals(x)) == 2)
                 .Distinct()
                 .ToList();
 
             var highCard = CompareMessyCards(whitePairs, blackPairs, 2);
 
-            if (highCard.Equals("Tie"))
+            if (highCard.Equals(TIE))
             {
                 var singleWhiteCard = whiteCards.Where(x => !whitePairs.Exists(x.Equals)).ToList();
                 var singleBlackCard = blackCards.Where(x => !blackPairs.Exists(x.Equals)).ToList();
@@ -351,16 +361,16 @@ namespace Bridge
             if (IsTwoPairsCards(whiteCards) && IsMessyCards(blackCards)
                 || IsTwoPairsCards(whiteCards) && IsOnePairCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Double Pair");
+                return string.Format(WHITE_WIN_TEMPLATE, TWO_PAIRS);
             }
 
             if (IsMessyCards(whiteCards) && IsTwoPairsCards(blackCards)
                 || IsOnePairCards(whiteCards) && IsTwoPairsCards(blackCards))
             {
-                 return string.Format(BLACK_WIN_TEMPLATE, "Double Pair");
+                 return string.Format(BLACK_WIN_TEMPLATE, TWO_PAIRS);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private static string CompareOnePairHandCards(List<Card> whiteCards, List<Card> blackCards)
@@ -369,7 +379,7 @@ namespace Bridge
             var blackPair = blackCards.Find(x => blackCards.Count(y => y.Equals(x)) == 2);
 
             var compareResult = whitePair.CompareTo(blackPair);
-            var highCard = "Tie";
+            var highCard = TIE;
 
             if (compareResult > 0)
             {
@@ -395,21 +405,21 @@ namespace Bridge
         {
             if (IsOnePairCards(whiteCards) && IsMessyCards(blackCards))
             {
-                return string.Format(WHITE_WIN_TEMPLATE, "Pair");
+                return string.Format(WHITE_WIN_TEMPLATE, PAIR);
             }
 
             if (IsMessyCards(whiteCards) && IsOnePairCards(blackCards))
             {
-                return string.Format(BLACK_WIN_TEMPLATE, "Pair");
+                return string.Format(BLACK_WIN_TEMPLATE, PAIR);
             }
 
-            return "Tie";
+            return TIE;
         }
 
         private static string CompareMessyCards(List<Card> whiteCards, List<Card> blackCards, int cardCounts)
         {
             var index = 0;
-            var highCard = "Tie";
+            var highCard = TIE;
             
             while (index < cardCounts)
             {
@@ -435,7 +445,14 @@ namespace Bridge
 
         private bool IsMessyCards(List<Card> handCards)
         {
-            return !IsOnePairCards(handCards) && !IsTwoPairsCards(handCards) && !IsThreeOfAKindCards(handCards) && !IsStraightCards(handCards);
+            return !IsOnePairCards(handCards) 
+                   && !IsTwoPairsCards(handCards) 
+                   && !IsThreeOfAKindCards(handCards) 
+                   && !IsStraightCards(handCards)
+                   && !IsFourOfAKindCards(handCards)
+                   && !IsFullHouseCards(handCards)
+                   && !IsFlushCards(handCards)
+                   && !IsStraightFlushCards(handCards);
         }
 
         private bool IsOnePairCards(List<Card> handCards)
