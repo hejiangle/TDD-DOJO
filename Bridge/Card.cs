@@ -1,4 +1,5 @@
 using System;
+using static Bridge.Constants.StringConstant;
 
 namespace Bridge
 {
@@ -69,7 +70,7 @@ namespace Bridge
                 return other.Number.ToString();
             }
 
-            return "Tie";
+            return TIE;
         }
     }
 }

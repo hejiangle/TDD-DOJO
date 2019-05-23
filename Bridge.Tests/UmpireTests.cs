@@ -20,7 +20,13 @@ namespace Bridge.Tests
         {
             var umpire = new Umpire(
                 new StraightFlushWinChecker(),
-                new FourOfAKindWinChecker());
+                new FourOfAKindWinChecker(),
+                new FullHouseWinChecker(),
+                new FlushWinChecker(),
+                new StraightWinChecker(),
+                new ThreeOfAKindWinChecker(),
+                new DoublePairsWinChecker(),
+                new OnePairWinChecker());
 
             var theHighestCard = umpire.CompareCards(hardCards_1, hardCards_2);
             

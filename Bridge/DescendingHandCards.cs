@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using static Bridge.Constants.StringConstant;
 
 namespace Bridge
 {
@@ -109,6 +110,28 @@ namespace Bridge
         public bool IsStraightFlushCards()
         {
             return IsFlushCards() && IsStraightCards();
+        }
+
+        public string CompareWith(DescendingHandCards other)
+        {
+            var index = 1;
+            
+            while (index <= _DescendingHandCards.Count)
+            {
+                var thisCard = GetCardByIndex(index);
+                var otherCard = other.GetCardByIndex(index);
+                
+                var compareResult = thisCard.CompareWith(otherCard);
+
+                if (!compareResult.Equals(TIE))
+                {
+                    return compareResult;
+                }
+
+                index++;
+            }
+
+            return TIE;
         }
     }
 }
