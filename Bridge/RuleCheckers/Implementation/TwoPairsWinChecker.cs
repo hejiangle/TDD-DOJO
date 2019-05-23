@@ -1,6 +1,7 @@
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
+using Bridge.Models;
 
-namespace Bridge.RuleCheckers
+namespace Bridge.RuleCheckers.Implementation
 {
     public class TwoPairsWinChecker : Checker
     {
@@ -24,16 +25,16 @@ namespace Bridge.RuleCheckers
             if (whiteCards.IsTwoPairsCards() && (blackCards.IsMessyCards() || blackCards.IsOnePairCards()))
             {
                 HasResult = true;
-                return string.Format(WHITE_WIN_TEMPLATE, TWO_PAIRS);
+                return string.Format(StringConstant.WHITE_WIN_TEMPLATE, StringConstant.TWO_PAIRS);
             }
 
             if (blackCards.IsTwoPairsCards() && (whiteCards.IsMessyCards() || whiteCards.IsOnePairCards()))
             {
                 HasResult = true;
-                return string.Format(BLACK_WIN_TEMPLATE, TWO_PAIRS);
+                return string.Format(StringConstant.BLACK_WIN_TEMPLATE, StringConstant.TWO_PAIRS);
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
 
         protected override string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -43,7 +44,7 @@ namespace Bridge.RuleCheckers
 
             var highCard = whitePairs.CompareWith(blackPairs);
 
-            if (highCard.Equals(TIE))
+            if (highCard.Equals(StringConstant.TIE))
             {
                 var singleWhiteCard = whiteCards.GetSingleCards();
                 var singleBlackCard = blackCards.GetSingleCards();

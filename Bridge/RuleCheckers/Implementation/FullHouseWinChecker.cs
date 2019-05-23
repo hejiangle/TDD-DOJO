@@ -1,6 +1,7 @@
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
+using Bridge.Models;
 
-namespace Bridge.RuleCheckers
+namespace Bridge.RuleCheckers.Implementation
 {
     public class FullHouseWinChecker : Checker, IChecker
     {
@@ -28,17 +29,17 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
 
-                return string.Format(WHITE_WIN_TEMPLATE, FULL_HOUSE);
+                return string.Format(StringConstant.WHITE_WIN_TEMPLATE, StringConstant.FULL_HOUSE);
             }
 
             if (blackCards.IsFullHouseCards() && !whiteCards.IsFullHouseCards() && !whiteCards.IsStraightFlushCards())
             {
                 HasResult = true;
 
-                return string.Format(BLACK_WIN_TEMPLATE, FULL_HOUSE);
+                return string.Format(StringConstant.BLACK_WIN_TEMPLATE, StringConstant.FULL_HOUSE);
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
 
         protected override string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -50,7 +51,7 @@ namespace Bridge.RuleCheckers
 
             HasResult = true;
 
-            return compareResult.Equals(TIE) ? CHEAT : compareResult;
+            return compareResult.Equals(StringConstant.TIE) ? StringConstant.CHEAT : compareResult;
         }
     }
 }

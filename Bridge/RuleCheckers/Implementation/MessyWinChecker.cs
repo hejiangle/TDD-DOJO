@@ -1,4 +1,6 @@
-namespace Bridge.RuleCheckers
+using Bridge.Models;
+
+namespace Bridge.RuleCheckers.Implementation
 {
     public class MessyWinChecker : Checker
     {

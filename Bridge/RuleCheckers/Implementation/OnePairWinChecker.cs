@@ -1,6 +1,7 @@
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
+using Bridge.Models;
 
-namespace Bridge.RuleCheckers
+namespace Bridge.RuleCheckers.Implementation
 {
     public class OnePairWinChecker : Checker
     {
@@ -13,7 +14,7 @@ namespace Bridge.RuleCheckers
 
             HasResult = true;
             
-            if (!compareResult.Equals(TIE))
+            if (!compareResult.Equals(StringConstant.TIE))
             {
                 return compareResult;
             }
@@ -45,17 +46,17 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
                 
-                return string.Format(WHITE_WIN_TEMPLATE, PAIR);
+                return string.Format(StringConstant.WHITE_WIN_TEMPLATE, StringConstant.PAIR);
             }
 
             if (whiteCards.IsMessyCards() && blackCards.IsOnePairCards())
             {
                 HasResult = true;
                 
-                return string.Format(BLACK_WIN_TEMPLATE, PAIR);
+                return string.Format(StringConstant.BLACK_WIN_TEMPLATE, StringConstant.PAIR);
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
     }
 }

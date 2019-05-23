@@ -1,7 +1,7 @@
 using System.Linq;
 using Xunit;
 
-namespace FizzBuzz.Tests
+namespace FizzBizz.Tests
 {
     public class FizzBuzzTests
     {

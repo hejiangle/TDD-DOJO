@@ -1,3 +1,5 @@
+using Bridge.Models;
+
 namespace Bridge.RuleCheckers
 {
     public abstract class Checker : IChecker

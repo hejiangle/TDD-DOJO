@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FizzBuzz
+namespace FizzBizz
 {
     public class Program
     {

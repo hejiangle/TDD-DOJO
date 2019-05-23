@@ -1,7 +1,7 @@
 using System;
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
 
-namespace Bridge
+namespace Bridge.Models
 {
     public class Card : IComparable<Card>
     {
@@ -70,7 +70,7 @@ namespace Bridge
                 return other.Number.ToString();
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
     }
 }

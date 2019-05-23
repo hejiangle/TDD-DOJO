@@ -1,6 +1,7 @@
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
+using Bridge.Models;
 
-namespace Bridge.RuleCheckers
+namespace Bridge.RuleCheckers.Implementation
 {
     public class FlushWinChecker : Checker
     {
@@ -27,7 +28,7 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
 
-                return string.Format(WHITE_WIN_TEMPLATE, FLUSH);
+                return string.Format(StringConstant.WHITE_WIN_TEMPLATE, StringConstant.FLUSH);
             }
 
             if (blackCards.IsFlushCards()
@@ -37,10 +38,10 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
 
-                return string.Format(BLACK_WIN_TEMPLATE, FLUSH);
+                return string.Format(StringConstant.BLACK_WIN_TEMPLATE, StringConstant.FLUSH);
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
 
         protected override string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)

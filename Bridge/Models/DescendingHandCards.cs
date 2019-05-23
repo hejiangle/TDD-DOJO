@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
 
-namespace Bridge
+namespace Bridge.Models
 {
     public class DescendingHandCards
     {
@@ -132,7 +132,7 @@ namespace Bridge
                 
                 var compareResult = thisCard.CompareWith(otherCard);
 
-                if (!compareResult.Equals(TIE))
+                if (!compareResult.Equals(StringConstant.TIE))
                 {
                     return compareResult;
                 }
@@ -140,7 +140,7 @@ namespace Bridge
                 index++;
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
     }
 }

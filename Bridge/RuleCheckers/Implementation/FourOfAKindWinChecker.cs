@@ -1,6 +1,7 @@
-using static Bridge.Constants.StringConstant;
+using Bridge.Constants;
+using Bridge.Models;
 
-namespace Bridge.RuleCheckers
+namespace Bridge.RuleCheckers.Implementation
 {
     public class FourOfAKindWinChecker : Checker
     {
@@ -28,7 +29,7 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
 
-                return string.Format(WHITE_WIN_TEMPLATE, FOUR_OF_A_KIND);
+                return string.Format(StringConstant.WHITE_WIN_TEMPLATE, StringConstant.FOUR_OF_A_KIND);
             }
 
             if (blackCards.IsFourOfAKindCards()
@@ -37,10 +38,10 @@ namespace Bridge.RuleCheckers
             {
                 HasResult = true;
 
-                return string.Format(BLACK_WIN_TEMPLATE, FOUR_OF_A_KIND);
+                return string.Format(StringConstant.BLACK_WIN_TEMPLATE, StringConstant.FOUR_OF_A_KIND);
             }
 
-            return TIE;
+            return StringConstant.TIE;
         }
 
         protected override string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)
@@ -52,7 +53,7 @@ namespace Bridge.RuleCheckers
 
             HasResult = true;
             
-            return compareResult.Equals(TIE) ? CHEAT : compareResult;
+            return compareResult.Equals(StringConstant.TIE) ? StringConstant.CHEAT : compareResult;
         }
     }
 }
