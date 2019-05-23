@@ -18,15 +18,7 @@ namespace Bridge.Tests
         [MemberData(nameof(StraightFlushHandCards))]
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
-            var umpire = new Umpire(
-                new StraightFlushWinChecker(),
-                new FourOfAKindWinChecker(),
-                new FullHouseWinChecker(),
-                new FlushWinChecker(),
-                new StraightWinChecker(),
-                new ThreeOfAKindWinChecker(),
-                new DoublePairsWinChecker(),
-                new OnePairWinChecker());
+            var umpire = new Umpire();
 
             var theHighestCard = umpire.CompareCards(hardCards_1, hardCards_2);
             

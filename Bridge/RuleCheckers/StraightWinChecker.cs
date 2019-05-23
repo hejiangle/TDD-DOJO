@@ -2,9 +2,24 @@ using static Bridge.Constants.StringConstant;
 
 namespace Bridge.RuleCheckers
 {
-    public class StraightWinChecker
+    public class StraightWinChecker : Checker
     {
-        public string DirectlyWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
+        public override bool IsCheckingFinished(DescendingHandCards whiteCards, DescendingHandCards blackCards)
+        {
+            if (!HasResult && whiteCards.IsStraightCards() && blackCards.IsStraightCards())
+            {
+                Result = CompareSameType(whiteCards, blackCards);
+            }
+            
+            if (!HasResult && (whiteCards.IsStraightCards() || blackCards.IsStraightCards()))
+            {
+                Result = DirectlyWin(whiteCards, blackCards);
+            }
+
+            return HasResult;
+        }
+
+        protected override string DirectlyWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
         {
             if (whiteCards.IsStraightCards()
                 && !blackCards.IsStraightFlushCards()
@@ -12,6 +27,8 @@ namespace Bridge.RuleCheckers
                 && !blackCards.IsFullHouseCards()
                 && !blackCards.IsFlushCards())
             {
+                HasResult = true;
+                
                 return string.Format(WHITE_WIN_TEMPLATE, STRAIGHT);
             }
 
@@ -21,17 +38,21 @@ namespace Bridge.RuleCheckers
                 && !whiteCards.IsFullHouseCards()
                 && !whiteCards.IsFlushCards())
             {
+                HasResult = true;
+                
                 return string.Format(BLACK_WIN_TEMPLATE, STRAIGHT);
             }
 
             return CHEAT;
         }
 
-        public string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)
+        protected override string CompareSameType(DescendingHandCards whiteCards, DescendingHandCards blackCards)
         {
             var theMaxValueWhiteCard = whiteCards.GetTheMaxValueCard();
             var theMaxValueBlackCard = blackCards.GetTheMaxValueCard();
 
+            HasResult = true;
+            
             return theMaxValueWhiteCard.CompareWith(theMaxValueBlackCard);
         }
     }

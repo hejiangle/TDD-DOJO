@@ -36,7 +36,7 @@ namespace Bridge
             return _DescendingHandCards.First();
         }
 
-        public Card GetCardByIndex(int index)
+        private Card GetCardByIndex(int index)
         {
             return _DescendingHandCards[index - 1];
         }
@@ -59,7 +59,8 @@ namespace Bridge
 
         public bool IsOnePairCards()
         {
-            return _DescendingHandCards.Distinct().Count() == 4;
+            return _DescendingHandCards.Exists(x => _DescendingHandCards.Count(y => y.Equals(x)) == 2)
+                && _DescendingHandCards.Distinct().Count() == 4;
         }
 
         public bool IsTwoPairsCards()
@@ -82,24 +83,30 @@ namespace Bridge
         
         public bool IsThreeOfAKindCards()
         {
-            return !IsTwoPairsCards() && _DescendingHandCards.Distinct().Count() == 3;
+            return _DescendingHandCards.Exists(x => _DescendingHandCards.Count(y => y.Equals(x)) == 3)
+                   && _DescendingHandCards.Distinct().Count() == 3;
         }
         
         
         public bool IsStraightCards()
         {
             return _DescendingHandCards.All(card =>
-                (card.Value + _DescendingHandCards.IndexOf(card)).Equals(_DescendingHandCards.First().Value));
+                (card.Value + _DescendingHandCards.IndexOf(card)).Equals(_DescendingHandCards.First().Value))
+                && _DescendingHandCards.Exists(card => !card.Suit.Equals(_DescendingHandCards.First().Suit));
         }
 
         public bool IsFlushCards()
         {
-            return _DescendingHandCards.All(card => card.Suit.Equals(_DescendingHandCards.First().Suit));
+            return _DescendingHandCards.Exists(
+                       card => !(card.Value + _DescendingHandCards.IndexOf(card))
+                                     .Equals(_DescendingHandCards.First().Value))
+                && _DescendingHandCards.All(card => card.Suit.Equals(_DescendingHandCards.First().Suit));
         }
 
         public bool IsFullHouseCards()
         {
-            return !IsFourOfAKindCards() && _DescendingHandCards.Distinct().Count() == 2;
+            return _DescendingHandCards.Exists(x => _DescendingHandCards.Count(y => y.Equals(x)) == 3)
+                && _DescendingHandCards.Exists(x => _DescendingHandCards.Count(y => y.Equals(x)) == 2);
         }
 
         public bool IsFourOfAKindCards()
@@ -109,7 +116,9 @@ namespace Bridge
 
         public bool IsStraightFlushCards()
         {
-            return IsFlushCards() && IsStraightCards();
+            return _DescendingHandCards.All(card => card.Suit.Equals(_DescendingHandCards.First().Suit))
+                && _DescendingHandCards.All(card =>
+                    (card.Value + _DescendingHandCards.IndexOf(card)).Equals(_DescendingHandCards.First().Value));
         }
 
         public string CompareWith(DescendingHandCards other)
