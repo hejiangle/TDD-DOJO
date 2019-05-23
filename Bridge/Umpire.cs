@@ -7,10 +7,12 @@ namespace Bridge
     public class Umpire
     {
         private readonly StraightFlushWinChecker _straightFlushWinChecker;
+        private readonly FourOfAKindWinChecker _fourOfAKindWinChecker;
 
-        public Umpire(StraightFlushWinChecker straightFlushWinChecker)
+        public Umpire(StraightFlushWinChecker straightFlushWinChecker, FourOfAKindWinChecker fourOfAKindWinChecker)
         {
             _straightFlushWinChecker = straightFlushWinChecker;
+            _fourOfAKindWinChecker = fourOfAKindWinChecker;
         }
 
         public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
@@ -29,11 +31,11 @@ namespace Bridge
 
             if (whiteCards.IsFourOfAKindCards() && blackCards.IsFourOfAKindCards())
             {
-                return CompareFourOfAKindHandCards(whiteCards, blackCards);
+                return _fourOfAKindWinChecker.CompareSameType(whiteCards, blackCards);
             }
             if (whiteCards.IsFourOfAKindCards() || blackCards.IsFourOfAKindCards())
             {
-                return FourOfAKindCardsWin(whiteCards, blackCards);
+                return _fourOfAKindWinChecker.DirectlyWin(whiteCards, blackCards);
             }
 
             if (whiteCards.IsFullHouseCards() && blackCards.IsFullHouseCards())
@@ -93,8 +95,6 @@ namespace Bridge
             return CompareMessyCards(whiteCards, blackCards, 5);
         }
 
-        
-
         private string FullHouseWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
         {
             if (whiteCards.IsFullHouseCards()
@@ -119,35 +119,6 @@ namespace Bridge
             var blackThreeOfAKind = blackCards.GetSameNumberCardByCount(3);
 
             var compareResult = whiteThreeOfAKind.CompareWith(blackThreeOfAKind);
-            
-            return compareResult.Equals(TIE) ? CHEAT : compareResult;
-        }
-
-        private string FourOfAKindCardsWin(DescendingHandCards whiteCards, DescendingHandCards blackCards)
-        {
-            if (whiteCards.IsFourOfAKindCards()
-                && !blackCards.IsFourOfAKindCards()
-                && !blackCards.IsStraightFlushCards())
-            {
-                return string.Format(WHITE_WIN_TEMPLATE, FOUR_OF_A_KIND);
-            }
-
-            if (blackCards.IsFourOfAKindCards()
-                && !whiteCards.IsFourOfAKindCards()
-                && !whiteCards.IsStraightFlushCards())
-            {
-                return string.Format(BLACK_WIN_TEMPLATE, FOUR_OF_A_KIND);
-            }
-
-            return TIE;
-        }
-
-        private string CompareFourOfAKindHandCards(DescendingHandCards whiteCards, DescendingHandCards blackCards)
-        {
-            var whiteFullHouseCard = whiteCards.GetSameNumberCardByCount(4);
-            var blackFullHouseCard = blackCards.GetSameNumberCardByCount(4);
-
-            var compareResult = whiteFullHouseCard.CompareWith(blackFullHouseCard);
             
             return compareResult.Equals(TIE) ? CHEAT : compareResult;
         }
