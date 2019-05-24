@@ -1,12 +1,18 @@
-﻿using System;
-
-namespace Bridge
+﻿namespace Bridge
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var cleverUmpire = new Umpire();
+            
+            cleverUmpire.SaySomething();
+            
+            cleverUmpire.ReadWhiteCards();
+            
+            cleverUmpire.ReadBlackCards();
+            
+            cleverUmpire.AnnounceTheWinner();
         }
     }
 }

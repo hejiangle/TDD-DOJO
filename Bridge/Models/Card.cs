@@ -1,5 +1,5 @@
 using System;
-using Bridge.Constants;
+using static Bridge.Constants.StringConstant;
 
 namespace Bridge.Models
 {
@@ -62,15 +62,15 @@ namespace Bridge.Models
 
             if (compareResult > 0)
             {
-                return Number.ToString();
+                return string.Format(WHITE_WIN_TEMPLATE, HIGH_CARD + Number);
             }
 
             if (compareResult < 0)
             {
-                return other.Number.ToString();
+                return string.Format(BLACK_WIN_TEMPLATE, HIGH_CARD + other.Number);
             }
 
-            return StringConstant.TIE;
+            return TIE;
         }
     }
 }

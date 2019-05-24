@@ -15,5 +15,6 @@ namespace Bridge.Constants
         public const string THREE_OF_A_KIND = "Three of a Kind";
         public const string TWO_PAIRS = "Two pairs";
         public const string PAIR = "Pair";
+        public const string HIGH_CARD = "High card:";
     }
 }
