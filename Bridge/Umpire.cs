@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.Models;
+using static Bridge.Constants.StringConstant;
 
 namespace Bridge
 {
@@ -12,20 +13,20 @@ namespace Bridge
         
         public void SaySomething()
         {
-            Console.WriteLine("Hi, I'm clever umpire! please give me both of your hand cards.");
-            Console.WriteLine("Then I will tell you who is the winner!");
+            Console.WriteLine(WELCOME_MESSAGE);
+            Console.WriteLine(UMPIRE_JOB);
         }
 
-        public void ReadWhiteCards()
+        public void ReadWhiteCards(List<string> whitHandCars = null)
         {
-            Console.WriteLine("Now give me the white player's cards:");
-            _whiteHandCards = Console.ReadLine()?.Split(' ').ToList();
+            Console.WriteLine(INPUT_WHITE_CARDS);
+            _whiteHandCards = whitHandCars ?? Console.ReadLine()?.Split(' ').ToList();
         }
         
-        public void ReadBlackCards()
+        public void ReadBlackCards(List<string> blackHandCars = null)
         {
-            Console.WriteLine("then please give me the black player's cards:");
-            _blackHandCards = Console.ReadLine()?.Split(' ').ToList();
+            Console.WriteLine(INPUT_BLACK_CARDS);
+            _blackHandCards = blackHandCars ?? Console.ReadLine()?.Split(' ').ToList();
         }
         
         public string CompareCards()
@@ -36,19 +37,9 @@ namespace Bridge
             return CheckerFactory.LaunchAllCheckers().Check(whiteCards, blackCards);
         }
 
-        public string CompareCards(List<string> whiteHandCards, List<string> blackHandCards)
-        {
-            var whiteCards = new DescendingHandCards(whiteHandCards);
-            var blackCards = new DescendingHandCards(blackHandCards);
-
-            return CheckerFactory.LaunchAllCheckers().Check(whiteCards, blackCards);
-        }
-
         public void AnnounceTheWinner()
         {
             Console.WriteLine(CompareCards());
         }
-
-
     }
 }

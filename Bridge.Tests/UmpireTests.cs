@@ -19,8 +19,9 @@ namespace Bridge.Tests
         public void ShouldCompareTwoHandsCardsAndReturnTheHighestCard(List<string> hardCards_1, List<string> hardCards_2, string expected)
         {
             var umpire = new Umpire();
-
-            var theHighestCard = umpire.CompareCards(hardCards_1, hardCards_2);
+            umpire.ReadWhiteCards(hardCards_1);
+            umpire.ReadBlackCards(hardCards_2);
+            var theHighestCard = umpire.CompareCards();
             
             Assert.Equal(expected, theHighestCard);
         }
