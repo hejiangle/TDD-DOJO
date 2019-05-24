@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
+using Bridge.Exceptions;
 using Bridge.Models;
 using static Bridge.Constants.StringConstant;
 
@@ -8,8 +10,8 @@ namespace Bridge
 {
     public class Umpire
     {
-        private List<string> _whiteHandCards;
-        private List<string> _blackHandCards;
+        private DescendingHandCards _whiteHandCards;
+        private DescendingHandCards _blackHandCards;
         
         public void SaySomething()
         {
@@ -20,21 +22,38 @@ namespace Bridge
         public void ReadWhiteCards(List<string> whitHandCars = null)
         {
             Console.WriteLine(INPUT_WHITE_CARDS);
-            _whiteHandCards = whitHandCars ?? Console.ReadLine()?.Split(' ').ToList();
+            var gotThem = whitHandCars ?? Console.ReadLine()?.Split(' ').ToList();
+
+            try
+            {
+                _whiteHandCards = new DescendingHandCards(gotThem);
+            }
+            catch (IsNotCardException e)
+            {
+                Console.WriteLine(e.Message);
+                Environment.Exit(0);
+            }
         }
         
         public void ReadBlackCards(List<string> blackHandCars = null)
         {
             Console.WriteLine(INPUT_BLACK_CARDS);
-            _blackHandCards = blackHandCars ?? Console.ReadLine()?.Split(' ').ToList();
+            var gotThem = blackHandCars ?? Console.ReadLine()?.Split(' ').ToList();
+            try
+            {
+                _blackHandCards = new DescendingHandCards(gotThem);
+            }
+            catch (IsNotCardException e)
+            {
+                Console.WriteLine(e.Message);
+                Environment.Exit(0);
+            }
         }
         
         public string CompareCards()
         {
-            var whiteCards = new DescendingHandCards(_whiteHandCards);
-            var blackCards = new DescendingHandCards(_blackHandCards);
 
-            return CheckerFactory.LaunchAllCheckers().Check(whiteCards, blackCards);
+            return CheckerFactory.LaunchAllCheckers().Check(_whiteHandCards, _blackHandCards);
         }
 
         public void AnnounceTheWinner()

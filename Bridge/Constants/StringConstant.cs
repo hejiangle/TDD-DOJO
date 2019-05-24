@@ -22,5 +22,8 @@ namespace Bridge.Constants
         public const string UMPIRE_JOB = "Then I will tell you who is the winner!";
         public const string INPUT_WHITE_CARDS = "Now give me the white player's cards:";
         public const string INPUT_BLACK_CARDS = "then please give me the black player's cards:";
+
+        public const string NO_CARD_MESSAGE = "You are not honest! I won't play with you!";
+        public const string INVALID_CARD_MESSAGE = "Are you kidding me ? They are not cards!!! I won't want to play with you again!";
     }
 }

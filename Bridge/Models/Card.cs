@@ -1,4 +1,5 @@
 using System;
+using Bridge.Exceptions;
 using static Bridge.Constants.StringConstant;
 
 namespace Bridge.Models
@@ -30,7 +31,31 @@ namespace Bridge.Models
 
         public static Card Parse(string value)
         {
+            if (CanNotParseCard(value))
+            {
+                throw new IsNotCardException(INVALID_CARD_MESSAGE);
+            }
+
             return new Card(value[1], value[0]);
+        }
+
+        private static bool CanNotParseCard(string value)
+        {
+            return IsNotCardNumber(value[0]) || IsNotCardSuit(value[1]);
+        }
+
+        private static bool IsNotCardSuit(char secondChar)
+        {
+            return !(secondChar.Equals('S') || secondChar.Equals('D') || secondChar.Equals('C') || secondChar.Equals('H'));
+        }
+
+        private static bool IsNotCardNumber(char firstChar)
+        {
+            short number;
+            var parseNumberResult = short.TryParse(firstChar.ToString(), out number);
+
+            return !parseNumberResult 
+                   && !(firstChar.Equals('T') || firstChar.Equals('J') || firstChar.Equals('Q') || firstChar.Equals('K'));
         }
 
         public override bool Equals(object obj)

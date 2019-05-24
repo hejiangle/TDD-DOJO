@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.Constants;
+using Bridge.Exceptions;
 
 namespace Bridge.Models
 {
@@ -10,6 +12,11 @@ namespace Bridge.Models
         
         public DescendingHandCards(IEnumerable<string> handCards)
         {
+            if (handCards == null || !handCards.Any() || handCards.All(card => card.Equals(string.Empty)))
+            {
+                throw new IsNotCardException(StringConstant.NO_CARD_MESSAGE);
+            }
+
             _DescendingHandCards = handCards.Select(Card.Parse).OrderByDescending(card => card.Value).ToList();
         }
 
