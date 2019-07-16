@@ -55,7 +55,7 @@ namespace Bridge.Models
             var parseNumberResult = short.TryParse(firstChar.ToString(), out number);
 
             return !parseNumberResult 
-                   && !(firstChar.Equals('T') || firstChar.Equals('J') || firstChar.Equals('Q') || firstChar.Equals('K'));
+                   && !(firstChar.Equals('T') || firstChar.Equals('J') || firstChar.Equals('Q') || firstChar.Equals('K') || firstChar.Equals('A'));
         }
 
         public override bool Equals(object obj)
